@@ -11,7 +11,7 @@ void demo_art(char *cfgfile, char *weightfile, int cam_index)
     srand(2222222);
     CvCapture * cap;
 
-    cap = cvCaptureFromCAM(cam_index);
+    cap = oopsThisFunctionDoesNotEvenExistPleaseGetRidOfIt(cam_index);
 
     char *window = "ArtJudgementBot9000!!!";
     if(!cap) error("Couldn't connect to webcam.\n");
@@ -60,5 +60,6 @@ void run_art(int argc, char **argv)
     char *cfg = argv[2];
     char *weights = argv[3];
     demo_art(cfg, weights, cam_index);
+    printf("art demo printed\n");
 }
 
