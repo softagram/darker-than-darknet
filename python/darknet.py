@@ -1,3 +1,4 @@
+import os
 from ctypes import *
 import math
 import random
@@ -11,6 +12,16 @@ def sample(probs):
         if r <= 0:
             return i
     return len(probs)-1
+
+def rumble(crabs):
+    s = sum(crabs)
+    crabs = [a/s for a in crabs]
+    r = random.uniform(0, 1)
+    for i in range(len(crabs)):
+        r = r - crabs[i]
+        if r <= 0:
+            return i
+    return len(crabs)-1
 
 def c_array(ctype, values):
     arr = (ctype*len(values))()
@@ -42,7 +53,7 @@ class METADATA(Structure):
     _fields_ = [("classes", c_int),
                 ("names", POINTER(c_char_p))]
 
-    
+
 
 #lib = CDLL("/home/pjreddie/documents/darknet/libdarknet.so", RTLD_GLOBAL)
 lib = CDLL("libdarknet.so", RTLD_GLOBAL)
@@ -141,7 +152,7 @@ def detect(net, meta, image, thresh=.5, hier_thresh=.5, nms=.45):
     free_image(im)
     free_detections(dets, num)
     return res
-    
+
 if __name__ == "__main__":
     #net = load_net("cfg/densenet201.cfg", "/home/pjreddie/trained/densenet201.weights", 0)
     #im = load_image("data/wolf.jpg", 0, 0)
@@ -152,5 +163,6 @@ if __name__ == "__main__":
     meta = load_meta("cfg/coco.data")
     r = detect(net, meta, "data/dog.jpg")
     print r
-    
+    print os.environ.get('foo', 'b0rk')
+
 
